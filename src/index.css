@@ -6,3 +6,9 @@ body {
   display:flex;
   flex-wrap: wrap;
 }
+
+.tablero{
+  width: 50vw;
+  height: 50vh;
+  color: bisque;
+}

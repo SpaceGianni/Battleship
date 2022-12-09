@@ -1,3 +1,39 @@
 .App {
   text-align: center;
+  margin: auto;
+}
+
+.tablero{
+  width: 40vw;
+  height: 40vh;
+  flex-wrap: wrap;
+  display: flex;  
+}
+
+.celda{
+  width: 10% ;
+  height:10%;
+  border: 1px solid rgb(150, 171, 220);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.barco1{
+  background-color: indianred;
+}
+
+.fire{
+  background-color: rgb(240, 255, 127);
+  padding: 10px;
+  font-size: 30px;
+  border-radius: 5px;
+  color: cadetblue;
+  margin-top: 10px;
+}
+
+.torpedo{
+  background-color: rgb(225, 255, 0);
 }
