@@ -15,10 +15,13 @@ function App() {
   //Posición de los barcos del computador  
   const [jugadasPC, setJugadasPC] = useState(
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]);
-  const [turn, setTurn] = useState("humano")
+ 
+    const [turn, setTurn] = useState("humano")
+  
   const [pcTurn, setPCTurn] = useState(
     Math.floor(Math.random() * 100)
   );
+
   //función del container 1
   const fireTorpedo = (index) => {
     let celdas = [...jugadas]
@@ -32,6 +35,7 @@ function App() {
       }
     }
     setJugadas(celdas);
+    setTurn("pc")
 
     //cambio de turno. Si no renderizo no se ve nada ¿por que?
     if (turn !== null) {
@@ -53,6 +57,7 @@ function App() {
       }
     }
     setJugadasPC(celdas);
+    setTurn("humano")
   }
 
   //Función para conocer el índice de los barcos del container 1
@@ -132,9 +137,9 @@ shootedShipsPC(indexShipsPC);
     <div className="App">
       <h1>Welcome to the battleship game</h1>
       <div className="reset-btn" onClick={(e) => reiniciar(e)}>Reset Game</div>
-
-      <div className="container1">
-        <h3>Es el turno del humano</h3>
+      {turn ==="humano" ? 
+        <div className="container1">
+        <h3>Es el turno del Computador</h3>
         <div className="tablero" id="tablero1">
           {jugadas.map((celda, index) => {
             return (
@@ -145,9 +150,11 @@ shootedShipsPC(indexShipsPC);
           })};
         </div>
       </div>
-
-      <div className="container2">
-        <h3>Es el turno del computador</h3>
+      
+      
+      :
+       <div className="container2">
+        <h3>Es el turno del Humano</h3>
         <div className="tablero" id="tablero2">
           {jugadasPC.map((celda, index) => {
             return (
@@ -157,8 +164,10 @@ shootedShipsPC(indexShipsPC);
             )
           })};
         </div>
-      </div>
-
+      </div>     
+      
+      }
+    
     </div>
   );
 }
