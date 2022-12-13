@@ -16,18 +16,24 @@ function App() {
   const [jugadasPC, setJugadasPC] = useState(
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]);
  
-    const [turn, setTurn] = useState("human")
+  const [turn, setTurn] = useState("human")
   
   const [pcTurn, setPCTurn] = useState(
     Math.floor(Math.random() * 100)
   );
+
+let message = "";
+    const [text, setText]= useState("")
 
   //función del container 1
   const fireTorpedo = (index) => {
     let celdas = [...jugadas]
     for (let i = 0; i < celdas.length; i++) {
       if (celdas[index] === 1) {
-        celdas[index] = 2 //shoot
+        celdas[index] = 2 //shooted
+        message="";
+        message="Ship shooted. Repeat the turn";
+
         //console.log("I was shooted")
       }
       else if (celdas[index] === 0) {
@@ -44,16 +50,22 @@ function App() {
   }
   //console.log("este es el turno", turn);
 
-  //función container 2
+  //función container 2. PCcontainter/Human's Turn
   const fireTorpedo2 = (index) => {
     let celdas = [...jugadasPC]
     for (let i = 0; i < celdas.length; i++) {
       if (celdas[index] === 1) {
         celdas[index] = 2 //shoot
         //console.log("I was shooted")
+        setText("");
+        setText("Well done!");
       }
       else if (celdas[index] === 0) {
         celdas[index] = 3; //missed shot
+        setText(""); 
+        setText("You've missed the shot");
+
+
       }
     }
     setJugadasPC(celdas);
@@ -94,32 +106,39 @@ shootedShips(indexShips)
  const shootedShipsPC = (array)=> {
   let shooted6 = array.includes(0) && array.includes(10) && array.includes(20) && array.includes(30) ? true : false
  if(shooted6 === true){
-   console.log("BARCO 6 HUNDIDO")
+  message= "";
+   message="SHIP 6 SUNK";
  }
  
  let shooted7 = array.includes(16) && array.includes(17) && array.includes(18) && array.includes(19) ? true : false
  if(shooted7 === true){
-   console.log("BARCO 7 HUNDIDO")
+  message="";
+   message="SHIP 7 SUNK";
  }
  
  let shooted8 = array.includes(24) && array.includes(34) && array.includes(44) && array.includes(54) && array.includes(64)? true : false
  if(shooted8===true){
-   console.log("BARCO 8 HUNDIDO")
+  message="";
+   message="SHIP 8 SUNK";
  }
  let shooted9 = array.includes(81) && array.includes(82) && array.includes(83) && array.includes(84) ? true : false
    //console.log("SHOOTED SHIP 4", shooted4) //BARCO 5 HUNDIDO 
    if(shooted9 === true){
-     console.log("BARCO 9 HUNDIDO")
+    message="";
+     message="SHIP 9 SUNK";
    }
  
  let shooted10 = array.includes(97) && array.includes(98) && array.includes(99) ? true : false
    //console.log("SHOOTED SHIP 5", shooted5) //BARCO 5 HUNDIDO 
  if(shooted10 === true){
-   console.log("BARCO 5 HUNDIDO")
+  message="";
+   message = "SHIP 10 SUNK";
  }
  
  if(shooted6 === true && shooted7===true && shooted8 ===true && shooted9 ===true && shooted10 ===true){
-   console.log("GAME OVER")
+  message=""; 
+  message ="GAME OVER";
+
  }  
 }
 shootedShipsPC(indexShipsPC);
@@ -149,6 +168,8 @@ shootedShipsPC(indexShipsPC);
             )
           })};
         </div>
+        <p>{message}</p>
+        <p>{text}</p>
       </div>
       
       
@@ -160,12 +181,14 @@ shootedShipsPC(indexShipsPC);
             return (
               <div className={
                 jugadasPC[index] === 0 ? "celda" : (jugadasPC[index] === 3 ? "celda torpedo2" : (jugadasPC[index] === 2 ? "celda shooted2" : "celda barco2"))}
-                key={index} onClick={() => fireTorpedo2(index)}>{celda}</div>
+                key={index} onClick={() => fireTorpedo2(index)}></div>
             )
           })};
         </div>
+        <p>{message}</p>
+        <p>{text}</p>
       </div>     
-      
+     
       }
     
     </div>

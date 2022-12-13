@@ -7,6 +7,8 @@
 
 h1{
   text-align: center; 
+  margin-bottom: 40px;
+  margin-top: 50px;
  
 }
 .container1{
@@ -14,8 +16,8 @@ margin: auto;
 }
 
 .tablero{
-  width: 30vw;
-  height: 30vh;
+  width: 40vw;
+  height: 40vh;
   flex-wrap: wrap;
   display: flex; 
   margin: auto; 
@@ -37,7 +39,7 @@ margin: auto;
   background-color: indianred;
 }
 .barco2{
-  background-color: rgb(141, 220, 62);
+  background-color: rgb(160, 224, 245);
 }
 
 .fire{
@@ -74,7 +76,7 @@ margin: auto;
   padding: 10px;
   width: 100px;
   margin: auto;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   cursor:pointer;
 
 }
