@@ -16,7 +16,7 @@ function App() {
   const [jugadasPC, setJugadasPC] = useState(
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]);
  
-    const [turn, setTurn] = useState("humano")
+    const [turn, setTurn] = useState("human")
   
   const [pcTurn, setPCTurn] = useState(
     Math.floor(Math.random() * 100)
@@ -39,7 +39,7 @@ function App() {
 
     //cambio de turno. Si no renderizo no se ve nada ¿por que?
     if (turn !== null) {
-      turn === "humano" ? setTurn("pc") : setTurn("humano");
+      turn === "human" ? setTurn("pc") : setTurn("human");
     }
   }
   //console.log("este es el turno", turn);
@@ -137,7 +137,7 @@ shootedShipsPC(indexShipsPC);
     <div className="App">
       <h1>Welcome to the battleship game</h1>
       <div className="reset-btn" onClick={(e) => reiniciar(e)}>Reset Game</div>
-      {turn ==="humano" ? 
+      {turn ==="pc" ? 
         <div className="container1">
         <h3>Es el turno del Computador</h3>
         <div className="tablero" id="tablero1">
@@ -154,7 +154,7 @@ shootedShipsPC(indexShipsPC);
       
       :
        <div className="container2">
-        <h3>Es el turno del Humano</h3>
+        <h3>It's human turn</h3>
         <div className="tablero" id="tablero2">
           {jugadasPC.map((celda, index) => {
             return (

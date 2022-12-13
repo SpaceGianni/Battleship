@@ -10,7 +10,7 @@ h1{
  
 }
 .container1{
-margin-left: 100px;
+margin: auto;
 }
 
 .tablero{
@@ -25,6 +25,7 @@ margin-left: 100px;
   width: 10% ;
   height:10%;
   border: 1px solid rgb(150, 171, 220);
+  background-color: rgb(160, 224, 245);
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -60,12 +61,11 @@ margin-left: 100px;
 }
 
 .shooted2{
-  background-color: rgb(33, 66, 4);
+  background-color: rgb(241, 244, 49);
 }
 
 .container2{
-margin-left: 800px;
-margin-top: 40px;
+margin: auto;
 }
 
 .reset-btn{
