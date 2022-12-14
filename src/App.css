@@ -36,7 +36,7 @@ margin: auto;
 }
 
 .barco1{
-  background-color: indianred;
+  background-color: rgb(244, 154, 10);
 }
 .barco2{
   background-color: rgb(160, 224, 245);
@@ -74,7 +74,7 @@ margin: auto;
   border: 5px solid coral;
   border-radius: 10px;
   padding: 10px;
-  width: 100px;
+  width: 150px;
   margin: auto;
   margin-bottom: 80px;
   cursor:pointer;

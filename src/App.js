@@ -19,13 +19,14 @@ function App() {
   const [turn, setTurn] = useState("human")
   
   const [pcTurn, setPCTurn] = useState(
-    Math.floor(Math.random() * 100)
+    setInterval(Math.floor(Math.random() * 100),2000)  
   );
+  console.log(pcTurn)
 
 let message = "";
     const [text, setText]= useState("")
 
-  //función del container 1
+  //función del container 1. Human's ship/PC TURN
   const fireTorpedo = (index) => {
     let celdas = [...jugadas]
     for (let i = 0; i < celdas.length; i++) {
@@ -41,12 +42,7 @@ let message = "";
       }
     }
     setJugadas(celdas);
-    setTurn("pc")
-
-    //cambio de turno. Si no renderizo no se ve nada ¿por que?
-    if (turn !== null) {
-      turn === "human" ? setTurn("pc") : setTurn("human");
-    }
+    setTurn("human");
   }
   //console.log("este es el turno", turn);
 
@@ -58,18 +54,17 @@ let message = "";
         celdas[index] = 2 //shoot
         //console.log("I was shooted")
         setText("");
-        setText("Well done!");
+        setText("Well done! You shot a ship!");
       }
       else if (celdas[index] === 0) {
         celdas[index] = 3; //missed shot
         setText(""); 
         setText("You've missed the shot");
-
-
       }
     }
     setJugadasPC(celdas);
-    setTurn("humano")
+    setTurn("pc");
+    setTimeout(fireTorpedo(pcTurn),3000);
   }
 
   //Función para conocer el índice de los barcos del container 1
@@ -158,13 +153,13 @@ shootedShipsPC(indexShipsPC);
       <div className="reset-btn" onClick={(e) => reiniciar(e)}>Reset Game</div>
       {turn ==="pc" ? 
         <div className="container1">
-        <h3>Es el turno del Computador</h3>
+        <h3>It's PC turn</h3>
         <div className="tablero" id="tablero1">
           {jugadas.map((celda, index) => {
             return (
               <div className={
                 jugadas[index] === 0 ? "celda" : (jugadas[index] === 3 ? "celda torpedo" : (jugadas[index] === 2 ? "celda shooted" : "celda barco1"))}
-                key={index} onClick={() => fireTorpedo(index)}>{celda}</div>
+                key={index}></div>
             )
           })};
         </div>
@@ -181,7 +176,7 @@ shootedShipsPC(indexShipsPC);
             return (
               <div className={
                 jugadasPC[index] === 0 ? "celda" : (jugadasPC[index] === 3 ? "celda torpedo2" : (jugadasPC[index] === 2 ? "celda shooted2" : "celda barco2"))}
-                key={index} onClick={() => fireTorpedo2(index)}></div>
+                key={index} onClick={() => setTimeout(fireTorpedo2(index),5000)}></div>
             )
           })};
         </div>
