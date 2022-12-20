@@ -34,4 +34,6 @@
    if(shooted1 === true && shooted2===true && shooted3 ===true && shooted4 ===true && shooted5 ===true){
      console.log("GAME OVER")
    }  
- }
+  }
+
+  
