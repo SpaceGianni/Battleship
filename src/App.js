@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import { shootedShips } from "./utils";
+
 
 function App() {
   // 0 = empty
@@ -21,6 +21,7 @@ function App() {
   const [pcTurn, setPCTurn] = useState(
     (Math.floor(Math.random() * 99))
   );
+  const [pcTurnList, setPCTurnList] = useState([]); //lista con los tiros ya realizados del PC
   //console.log(pcTurn)
 
   //Texto que aparece en el div
@@ -65,9 +66,8 @@ function App() {
   let shooted9 = "";
   let shooted10 = "";
 
-
-
-  //función del container 1. PC TURN
+  let array=[];
+  //Función del container 1. PC TURN
   const fireTorpedo = (pcTurn) => {
 
     //Función para conocer el índice de los barcos del container 1
@@ -76,27 +76,33 @@ function App() {
     }).filter(element => element !== undefined);
     //console.log("indice de barcos golpeados", indexShips)
 
-    setText("");
+    setText2("");
     let celdas = [...jugadas]
     for (let i = 0; i < celdas.length; i++) {
       if (celdas[pcTurn] === 1) {
         celdas[pcTurn] = 2 //shooted
-        setText("One of your ships was shooted!");
+        setText2("One of your ships was shooted!");
 
         //console.log("I was shooted")
       }
       else if (celdas[pcTurn] === 0) {
         celdas[pcTurn] = 3; //missed shot
-        setText("The computer missed the shot!");
+        setText2("The computer missed the shot!");
       }
     }
+    setPCTurnList(()=> {
+      
+      array.push(pcTurn)
+      return array;
+    });
+
     setJugadas(celdas);
-    setTimeout(setTurn, 5000, "human");
-    shootedShips(indexShips) //está siempre ejecutándose
-    //setText("");
+    setTimeout(setTurn, 2000, "human");
+    shootedShips(indexShips) 
+   
   }
   //console.log("este es el turno", turn);
-
+  console.log("pcTurnList",pcTurnList)
   //función container 2. Human's Turn
   const fireTorpedo2 = (index) => {
   
@@ -123,7 +129,7 @@ function App() {
     }
     setJugadasPC(celdas);
     setPCTurn((Math.floor(Math.random() * 99)));
-    setTimeout(setTurn, 2000, "pc");
+    setTimeout(setTurn, 1000, "pc");
     setTimeout(fireTorpedo, 2000, pcTurn);
     shootedShipsPC(indexShipsPC);
   }
@@ -207,19 +213,20 @@ function App() {
       <h1>Welcome to the battleship game</h1>
       <div className="reset-btn" onClick={(e) => reiniciar(e)}>Reset Game</div>
       {turn === "pc" ?
+      <>
+      <h3>It's PC's turn</h3>
         <div className="container1">
-          <h3>It's PC's turn</h3>
           <div className="tablero" id="tablero1">
             {jugadas.map((celda, index) => {
               return (
                 <div className={
-                  jugadas[index] === 0 ? "celda" : (jugadas[index] === 3 ? "celda torpedo" : (jugadas[index] === 2 ? "celda shooted" : "celda barco1"))}
+                  jugadas[index] === 0 ? "celda" : (jugadas[index] === 3 ? "celda torpedo close close:after" : (jugadas[index] === 2 ? "celda shooted close close:after" : "celda barco1"))}
                   key={index}></div>
               )
             })};
           </div>
           <div className="panel two">Announcements
-            <div className="messShipText2">{text2}</div>
+            <div className="messShipText">{text2}</div>
             <div className="messShip">{ship1Message}</div>
             <div className="messShip">{ship2Message}</div>
             <div className="messShip">{ship3Message}</div>
@@ -228,15 +235,16 @@ function App() {
           </div>
 
         </div>
-
+        </>
         :
+        <>
+        <h3>It's Human's turn</h3>
         <div className="container2">
-          <h3>It's human's turn</h3>
           <div className="tablero" id="tablero2">
             {jugadasPC.map((celda, index) => {
               return (
                 <div className={
-                  jugadasPC[index] === 0 ? "celda" : (jugadasPC[index] === 3 ? "celda torpedo2" : (jugadasPC[index] === 2 ? "celda shooted2" : "celda barco2"))}
+                  jugadasPC[index] === 0 ? "celda" : (jugadasPC[index] === 3 ? "celda torpedo2 close close:after" : (jugadasPC[index] === 2 ? "celda shooted2 close close:after" : "celda barco2"))}
                   key={index} onClick={() => setTimeout(fireTorpedo2(index), 5000)}></div>
               )
             })};
@@ -250,6 +258,7 @@ function App() {
             <div className="messShip">{ship10Message}</div>
           </div>
         </div>
+        </>
 
       }
 

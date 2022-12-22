@@ -5,78 +5,99 @@
   height: 100vh;
 }
 
-h1{
-  text-align: center; 
+h1 {
+  text-align: center;
   margin-bottom: 40px;
   margin-top: 50px;
- 
 }
-.container1{
-margin: auto;
+.container1 {
+  display: flex; 
 }
 
-.tablero{
+.container2 {
+  display: flex;
+}
+
+.tablero {
   width: 40vw;
   height: 40vh;
   flex-wrap: wrap;
-  display: flex; 
-  margin: auto; 
+  display: flex;
+  margin-left: 550px;
 }
 
-.celda{
-  width: 10% ;
-  height:10%;
+.panel {
+  width: 350px;
+  height: 240px;
+  padding: 10px;
+  background-color: blanchedalmond;
+  border: 1px solid rgb(239, 190, 117);
+  margin-left: 50px;
+}
+
+.messShipText {
+  color: rgb(230, 87, 87);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.celda {
+  width: 10%;
+  height: 10%;
   border: 1px solid rgb(150, 171, 220);
   background-color: rgb(160, 224, 245);
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
-.barco1{
+.barco1 {
   background-color: rgb(232, 177, 121);
 }
-.barco2{
+.barco2 {
   background-color: rgb(160, 224, 245);
 }
 
-.fire{
-  background-color:  rgb(137, 196, 208);
-}
-
-.fire2{
-  background-color: rgb(255, 127, 159);
-}
-
-.torpedo{
-  background-color:rgb(137, 196, 208);
-}
-
-.torpedo2{
+.torpedo {
   background-color: rgb(137, 196, 208);
 }
 
-.shooted{
-  background-color: rgb(232, 126, 20);
+.torpedo2 {
+  background-color: rgb(137, 196, 208);
 }
 
-.shooted2{
+.shooted {
+  background-color: rgb(232, 126, 20);
+
+}
+
+.shooted2 {
   background-color: rgb(241, 244, 49);
 }
 
-.container2{
-margin: auto;
-}
-
-.reset-btn{
+.reset-btn {
   border: 5px solid coral;
   border-radius: 10px;
   padding: 10px;
   width: 150px;
   margin: auto;
   margin-bottom: 80px;
-  cursor:pointer;
+  cursor: pointer;
+}
 
+.close {
+  position: relative;
+}
+.close:after {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "\274c";
+  font-size: 20px;
+  color: rgb(237, 12, 12);
+  line-height: 100px;
+  text-align: center;
+  align-items: center;
 }
