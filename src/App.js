@@ -8,11 +8,11 @@ function App() {
   // 2 = a sunken part of a ship
   // 3 = a missed shot
 
-  //Posición de los barcos del jugador humano  
-  const [jugadas, setJugadas] = useState(
+  //Posición de los barcos del jugador humano (PC'S TURN) 
+  const [humanShips, setHumanShips] = useState(
     [1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]);
 
-  //Posición de los barcos del computador  
+  //Posición de los barcos del computador (HUMAN'S TURN) 
   const [jugadasPC, setJugadasPC] = useState(
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]);
 
@@ -21,7 +21,7 @@ function App() {
   const [pcTurn, setPCTurn] = useState(
     (Math.floor(Math.random() * 99))
   );
-  const [pcTurnList, setPCTurnList] = useState([]); //lista con los tiros ya realizados del PC
+
   //console.log(pcTurn)
 
   //Texto que aparece en el div
@@ -66,54 +66,13 @@ function App() {
   let shooted9 = "";
   let shooted10 = "";
 
-  let array=[];
-  //Función del container 1. PC TURN
-  const fireTorpedo = (pcTurn) => {
-
-    //Función para conocer el índice de los barcos del container 1
-    let indexShips = jugadas.map((item, index) => {
-      if (item === 2) return index
-    }).filter(element => element !== undefined);
-    //console.log("indice de barcos golpeados", indexShips)
-
-    setText2("");
-    let celdas = [...jugadas]
-    for (let i = 0; i < celdas.length; i++) {
-      if (celdas[pcTurn] === 1) {
-        celdas[pcTurn] = 2 //shooted
-        setText2("One of your ships was shooted!");
-
-        //console.log("I was shooted")
-      }
-      else if (celdas[pcTurn] === 0) {
-        celdas[pcTurn] = 3; //missed shot
-        setText2("The computer missed the shot!");
-      }
-    }
-    setPCTurnList(()=> {
-      
-      array.push(pcTurn)
-      return array;
-    });
-
-    setJugadas(celdas);
-    setTimeout(setTurn, 2000, "human");
-    shootedShips(indexShips) 
-   
-  }
-  //console.log("este es el turno", turn);
-  console.log("pcTurnList",pcTurnList)
-  //función container 2. Human's Turn
+  //Función container 2. Human's Turn
   const fireTorpedo2 = (index) => {
-  
-    //Función para conocer el índice de los barcos del container 2
-  let indexShipsPC = jugadasPC.map((item, index) => {
-    if (item === 2) return index
-  }).filter(element => element !== undefined);
-  //console.log("indice de barcos golpeados PC", indexShipsPC)
+
 
     setText("");
-    let celdas = [...jugadasPC]
+    let celdas = [...jugadasPC];
+
     for (let i = 0; i < celdas.length; i++) {
       if (celdas[index] === 1) {
         celdas[index] = 2 //shoot
@@ -128,142 +87,197 @@ function App() {
       }
     }
     setJugadasPC(celdas);
+    //console.log(jugadasPC);
+
+    //Función para conocer el índice de los barcos golpeados del container 2
+    let indexShipsPC = jugadasPC.map((item, index) => {
+      if (item === 2) return index
+    }).filter(element => element !== undefined);
+
+
+    //console.log(indexShipsPC)
+
     setPCTurn((Math.floor(Math.random() * 99)));
     setTimeout(setTurn, 1000, "pc");
-    setTimeout(fireTorpedo, 2000, pcTurn);
-    shootedShipsPC(indexShipsPC);
-  }
-
-  // Función para determinar cuando un barco del usuario "humano" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
-  const shootedShips = (indexShips) => {
-    if (indexShips.includes(0) && indexShips.includes(1) && indexShips.includes(2) && indexShips.includes(3) && indexShips.includes(4)) {
-      shooted1 = true;
-      setShip1Message("Ship 1 was sunked");
-    }
-
-    if (indexShips.includes(9) && indexShips.includes(19) && indexShips.includes(29) && indexShips.includes(39)) {
-      shooted2 = true;
-      setShip2Message("Ship 2 was sunked"); 
-    }
-
-    if (indexShips.includes(40) && indexShips.includes(50) && indexShips.includes(60) && indexShips.includes(70)) {
-      shooted3 = true;
-      setShip3Message("Ship 3 was sunked");
-    }
-
-    if (indexShips.includes(53) && indexShips.includes(54) && indexShips.includes(55)) {
-      shooted4 = true;
-      setShip4Message("Ship 4 was sunked");
-    }
-
-    if (indexShips.includes(93) && indexShips.includes(92) && indexShips.includes(91) && indexShips.includes(90)) {
-      shooted5 = true;
-      setShip5Message("Ship 5 was sunked");
-    }
-
-    if (shooted1 === true && shooted2 === true && shooted3 === true && shooted4 === true && shooted5 === true) {
-      setText2("GAME OVER! Human's wins")
-      alert("GAME OVER! PC's wins");
-      window.location.reload();
-    }
+    setTimeout(fireTorpedoPC, 2000, pcTurn);
+    shootedShipsPC(indexShipsPC);//Función para conocer cuándo un barco está hundido
 
   }
 
-  // Función para determinar cuando un barco del usuario "PC" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
-  const shootedShipsPC = (indexShipsPC) => {
-    if (indexShipsPC.includes(0) && indexShipsPC.includes(10) && indexShipsPC.includes(20) && indexShipsPC.includes(30)) {
-      shooted6 = true;
-      setShip6Message("Ship 6 was sunked");
+  //Función del container 1. PC TURN
+  const fireTorpedoPC = (pcTurn) => {
+
+    setText2("");
+    let celdas = [...humanShips];//copio arreglo par manejarlo
+    
+    let torpedoPCIndexes= celdas.map((item, index)=> { //guardo todos los tiros del PC
+      if(item === 2 || item ===3) return index
+    }).filter(item => item!== undefined);
+
+    console.log("TORPEDO PC INDEXEX:" , torpedoPCIndexes)
+   
+    if(torpedoPCIndexes.indexOf(pcTurn)=== -1){  //Condicón para asegurarse que no hayan tiros repetidos
+    for (let i = 0; i < celdas.length; i++) {
+        if (celdas[pcTurn] === 1) { //el tiro cae en una casilla con barco
+          celdas[pcTurn] = 2 //barco golpeado
+          setText2("One of your ships was shooted!");
+        }
+        else if (celdas[pcTurn] === 0) { //el tiro cae en al agua
+          celdas[pcTurn] = 3; //tiro pedido
+          setText2("The computer missed the shot!");
+        }
+      }
+    } else{
+      console.log("DENTRO DEL LA CONDICION DE REPETIDOS");
+      
+      // setPCTurn((Math.floor(Math.random() * 99)));
+      // setTimeout(fireTorpedoPC, 2000, pcTurn);
     }
+      
+      setHumanShips(celdas);
 
-    if (indexShipsPC.includes(16) && indexShipsPC.includes(17) && indexShipsPC.includes(18) && indexShipsPC.includes(19)) {
-      shooted7 = true;
-      setShip7Message("Ship 7 was sunked");
+      //Función para conocer el índice de los barcos que fueron golpeados del container 1
+      let indexShipsFiltered = humanShips.map((item, index) => {
+        if (item === 2) return index
+      }).filter(element => element !== undefined);
+      //console.log("indice de barcos golpeados. PC TURN", indexShips)
+
+      setTimeout(setTurn, 2000, "human"); //cambio de turno y de vista
+      shootedShips(indexShipsFiltered) //función para conocer cuándo los barcos están hundidos
+
     }
+    //console.log("este es el turno", turn);
 
-    if (indexShipsPC.includes(24) && indexShipsPC.includes(34) && indexShipsPC.includes(44) && indexShipsPC.includes(54) && indexShipsPC.includes(64)) {
-      shooted8 = true;
-      setShip8Message("Ship 8 was sunked");
-    }
+    // PC's TURN: Función para determinar cuando un barco del usuario "humano" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
+    const shootedShips = (indexShips) => {
 
-    if (indexShipsPC.includes(81) && indexShipsPC.includes(82) && indexShipsPC.includes(83) && indexShipsPC.includes(84)) {
-      shooted9 = true;
-      setShip9Message("Ship 9 was sunked");
-    }
-
-    if (indexShipsPC.includes(97) && indexShipsPC.includes(98) && indexShipsPC.includes(99)) {
-      shooted10 = true;
-      setShip10Message("Ship 10 was sunked");
-    }
-
-    if (shooted6 === true && shooted7 === true && shooted8 === true && shooted9 === true && shooted10 === true) {
-      setText("GAME OVER! Human's wins")
-      alert("GAME OVER! Human's wins");
-      window.location.reload();
-    }
-  }
-
-  const reiniciar = (e) => {
-    e.preventDefault();
-    window.location.reload();
-  };
-
-  return (
-    <div className="App">
-      <h1>Welcome to the battleship game</h1>
-      <div className="reset-btn" onClick={(e) => reiniciar(e)}>Reset Game</div>
-      {turn === "pc" ?
-      <>
-      <h3>It's PC's turn</h3>
-        <div className="container1">
-          <div className="tablero" id="tablero1">
-            {jugadas.map((celda, index) => {
-              return (
-                <div className={
-                  jugadas[index] === 0 ? "celda" : (jugadas[index] === 3 ? "celda torpedo close close:after" : (jugadas[index] === 2 ? "celda shooted close close:after" : "celda barco1"))}
-                  key={index}></div>
-              )
-            })};
-          </div>
-          <div className="panel two">Announcements
-            <div className="messShipText">{text2}</div>
-            <div className="messShip">{ship1Message}</div>
-            <div className="messShip">{ship2Message}</div>
-            <div className="messShip">{ship3Message}</div>
-            <div className="messShip">{ship4Message}</div>
-            <div className="messShip">{ship5Message}</div>
-          </div>
-
-        </div>
-        </>
-        :
-        <>
-        <h3>It's Human's turn</h3>
-        <div className="container2">
-          <div className="tablero" id="tablero2">
-            {jugadasPC.map((celda, index) => {
-              return (
-                <div className={
-                  jugadasPC[index] === 0 ? "celda" : (jugadasPC[index] === 3 ? "celda torpedo2 close close:after" : (jugadasPC[index] === 2 ? "celda shooted2 close close:after" : "celda barco2"))}
-                  key={index} onClick={() => setTimeout(fireTorpedo2(index), 5000)}></div>
-              )
-            })};
-          </div>
-          <div className="panel one">Announcements
-            <div className="messShipText">{text}</div>
-            <div className="messShip">{ship6Message}</div>
-            <div className="messShip">{ship7Message}</div>
-            <div className="messShip">{ship8Message}</div>
-            <div className="messShip">{ship9Message}</div>
-            <div className="messShip">{ship10Message}</div>
-          </div>
-        </div>
-        </>
-
+      if (indexShips.includes(0) && indexShips.includes(1) && indexShips.includes(2) && indexShips.includes(3) && indexShips.includes(4)) {
+        shooted1 = true;
+        setShip1Message("Ship 1 was sunked");
       }
 
-    </div>
-  );
-}
+      if (indexShips.includes(9) && indexShips.includes(19) && indexShips.includes(29) && indexShips.includes(39)) {
+        shooted2 = true;
+        setShip2Message("Ship 2 was sunked");
+      }
 
-export default App;
+      if (indexShips.includes(40) && indexShips.includes(50) && indexShips.includes(60) && indexShips.includes(70)) {
+        shooted3 = true;
+        setShip3Message("Ship 3 was sunked");
+      }
+
+      if (indexShips.includes(53) && indexShips.includes(54) && indexShips.includes(55)) {
+        shooted4 = true;
+        setShip4Message("Ship 4 was sunked");
+      }
+
+      if (indexShips.includes(93) && indexShips.includes(92) && indexShips.includes(91) && indexShips.includes(90)) {
+        shooted5 = true;
+        setShip5Message("Ship 5 was sunked");
+      }
+
+      if (shooted1 === true && shooted2 === true && shooted3 === true && shooted4 === true && shooted5 === true) {
+        setText2("GAME OVER! Human's wins")
+        alert("GAME OVER! PC's wins");
+        window.location.reload();
+      }
+    }
+
+    // Función para determinar cuando un barco del usuario "PC" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
+    const shootedShipsPC = (indexShipsPC) => {
+      if (indexShipsPC.includes(0) && indexShipsPC.includes(10) && indexShipsPC.includes(20) && indexShipsPC.includes(30)) {
+        shooted6 = true;
+        setShip6Message("Ship 6 was sunked");
+      }
+
+      if (indexShipsPC.includes(16) && indexShipsPC.includes(17) && indexShipsPC.includes(18) && indexShipsPC.includes(19)) {
+        shooted7 = true;
+        setShip7Message("Ship 7 was sunked");
+      }
+
+      if (indexShipsPC.includes(24) && indexShipsPC.includes(34) && indexShipsPC.includes(44) && indexShipsPC.includes(54) && indexShipsPC.includes(64)) {
+        shooted8 = true;
+        setShip8Message("Ship 8 was sunked");
+      }
+
+      if (indexShipsPC.includes(81) && indexShipsPC.includes(82) && indexShipsPC.includes(83) && indexShipsPC.includes(84)) {
+        shooted9 = true;
+        setShip9Message("Ship 9 was sunked");
+      }
+
+      if (indexShipsPC.includes(97) && indexShipsPC.includes(98) && indexShipsPC.includes(99)) {
+        shooted10 = true;
+        setShip10Message("Ship 10 was sunked");
+      }
+
+      if (shooted6 === true && shooted7 === true && shooted8 === true && shooted9 === true && shooted10 === true) {
+        setText("GAME OVER! Human's wins")
+        alert("GAME OVER! Human's wins");
+        window.location.reload();
+      }
+    }
+
+    const reiniciar = (e) => {
+      e.preventDefault();
+      window.location.reload();
+    };
+
+    return (
+      <div className="App">
+        <h1>Welcome to the battleship game</h1>
+        <div className="reset-btn" onClick={(e) => reiniciar(e)}>Reset Game</div>
+        {turn === "pc" ?
+          <>
+            <h3>It's PC's turn</h3>
+            <div className="container1">
+              <div className="tablero" id="tablero1">
+                {humanShips.map((celda, index) => {
+                  return (
+                    <div className={
+                      humanShips[index] === 0 ? "celda" : (humanShips[index] === 3 ? "celda torpedo close close:after" : (humanShips[index] === 2 ? "celda shooted close close:after" : "celda barco1"))}
+                      key={index}></div>
+                  )
+                })};
+              </div>
+              <div className="panel two">Announcements
+                <div className="messShipText">{text2}</div>
+                <div className="messShip">{ship1Message}</div>
+                <div className="messShip">{ship2Message}</div>
+                <div className="messShip">{ship3Message}</div>
+                <div className="messShip">{ship4Message}</div>
+                <div className="messShip">{ship5Message}</div>
+              </div>
+
+            </div>
+          </>
+          :
+          <>
+            <h3>It's Human's turn</h3>
+            <div className="container2">
+              <div className="tablero" id="tablero2">
+                {jugadasPC.map((celda, index) => {
+                  return (
+                    <div className={
+                      jugadasPC[index] === 0 ? "celda" : (jugadasPC[index] === 3 ? "celda torpedo2 close close:after" : (jugadasPC[index] === 2 ? "celda shooted2 close close:after" : "celda barco2"))}
+                      key={index} onClick={() => fireTorpedo2(index)}></div>
+                  )
+                })};
+              </div>
+              <div className="panel one">Announcements
+                <div className="messShipText">{text}</div>
+                <div className="messShip">{ship6Message}</div>
+                <div className="messShip">{ship7Message}</div>
+                <div className="messShip">{ship8Message}</div>
+                <div className="messShip">{ship9Message}</div>
+                <div className="messShip">{ship10Message}</div>
+              </div>
+            </div>
+          </>
+
+        }
+
+      </div>
+    );
+  }
+
+  export default App;
