@@ -1,5 +1,7 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "../css/game.css";
+import PCturn from "./PCturn";
+import HumanTurn from "./HumanTurn";
 
 
 function Game() {
@@ -104,15 +106,15 @@ function Game() {
 
     setText2("");
     let celdas = [...humanShips];//copio arreglo par manejarlo
-   
-    let torpedoPCIndexes= celdas.map((item, index)=> { //guardo todos los tiros del PC
-      if(item === 2 || item ===3) return index
-    }).filter(item => item!== undefined);
 
-    console.log("TORPEDO PC INDEXEX:" , torpedoPCIndexes)
-  
-    if(torpedoPCIndexes.indexOf(pcTurn)=== -1){  //Condicón para asegurarse que no hayan tiros repetidos
-    for (let i = 0; i < celdas.length; i++) {
+    let torpedoPCIndexes = celdas.map((item, index) => { //guardo todos los tiros del PC
+      if (item === 2 || item === 3) return index
+    }).filter(item => item !== undefined);
+
+    console.log("TORPEDO PC INDEXEX:", torpedoPCIndexes)
+
+    if (torpedoPCIndexes.indexOf(pcTurn) === -1) {  //Condicón para asegurarse que no hayan tiros repetidos
+      for (let i = 0; i < celdas.length; i++) {
         if (celdas[pcTurn] === 1) { //el tiro cae en una casilla con barco
           celdas[pcTurn] = 2 //barco golpeado
           setText2("");
@@ -125,155 +127,116 @@ function Game() {
           setText2("The computer missed the shot!");
         }
       }
-    } else{
+    } else {
       //console.log("DENTRO DEL LA CONDICION DE REPETIDOS");
       fireTorpedoPC((Math.floor(Math.random() * 99)));
     }
-     
-      setHumanShips(celdas);
 
-      //Función para conocer el índice de los barcos que fueron golpeados del container 1
-      let indexShipsFiltered = humanShips.map((item, index) => {
-        if (item === 2) return index
-      }).filter(element => element !== undefined);
-      //console.log("indice de barcos golpeados. PC TURN", indexShips)
+    setHumanShips(celdas);
 
-      setTimeout(setTurn, 2000, "human"); //cambio de turno y de vista
-      shootedShips(indexShipsFiltered) //función para conocer cuándo los barcos están hundidos
+    //Función para conocer el índice de los barcos que fueron golpeados del container 1
+    let indexShipsFiltered = humanShips.map((item, index) => {
+      if (item === 2) return index
+    }).filter(element => element !== undefined);
+    //console.log("indice de barcos golpeados. PC TURN", indexShips)
 
-    }
-    //console.log("este es el turno", turn);
+    setTimeout(setTurn, 2000, "human"); //cambio de turno y de vista
+    shootedShips(indexShipsFiltered) //función para conocer cuándo los barcos están hundidos
 
-    // PC's TURN: Función para determinar cuando un barco del usuario "humano" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
-    const shootedShips = (indexShips) => {
+  }
+  //console.log("este es el turno", turn);
 
-      if (indexShips.includes(0) && indexShips.includes(1) && indexShips.includes(2) && indexShips.includes(3) && indexShips.includes(4)) {
-        shooted1 = true;
-        setShip1Message("Ship 1 was sunked");
-      }
+  // PC's TURN: Función para determinar cuando un barco del usuario "humano" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
+  const shootedShips = (indexShips) => {
 
-      if (indexShips.includes(9) && indexShips.includes(19) && indexShips.includes(29) && indexShips.includes(39)) {
-        shooted2 = true;
-        setShip2Message("Ship 2 was sunked");
-      }
-
-      if (indexShips.includes(40) && indexShips.includes(50) && indexShips.includes(60) && indexShips.includes(70)) {
-        shooted3 = true;
-        setShip3Message("Ship 3 was sunked");
-      }
-
-      if (indexShips.includes(53) && indexShips.includes(54) && indexShips.includes(55)) {
-        shooted4 = true;
-        setShip4Message("Ship 4 was sunked");
-      }
-
-      if (indexShips.includes(93) && indexShips.includes(92) && indexShips.includes(91) && indexShips.includes(90)) {
-        shooted5 = true;
-        setShip5Message("Ship 5 was sunked");
-      }
-
-      if (shooted1 === true && shooted2 === true && shooted3 === true && shooted4 === true && shooted5 === true) {
-        setText2("GAME OVER! Human's wins")
-        alert("GAME OVER! PC's wins");
-        window.location.reload();
-      }
+    if (indexShips.includes(0) && indexShips.includes(1) && indexShips.includes(2) && indexShips.includes(3) && indexShips.includes(4)) {
+      shooted1 = true;
+      setShip1Message("Ship 1 was sunked");
     }
 
-    // Función para determinar cuando un barco del usuario "PC" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
-    const shootedShipsPC = (indexShipsPC) => {
-      if (indexShipsPC.includes(0) && indexShipsPC.includes(10) && indexShipsPC.includes(20) && indexShipsPC.includes(30)) {
-        shooted6 = true;
-        setShip6Message("Ship 6 was sunked");
-      }
-
-      if (indexShipsPC.includes(16) && indexShipsPC.includes(17) && indexShipsPC.includes(18) && indexShipsPC.includes(19)) {
-        shooted7 = true;
-        setShip7Message("Ship 7 was sunked");
-      }
-
-      if (indexShipsPC.includes(24) && indexShipsPC.includes(34) && indexShipsPC.includes(44) && indexShipsPC.includes(54) && indexShipsPC.includes(64)) {
-        shooted8 = true;
-        setShip8Message("Ship 8 was sunked");
-      }
-
-      if (indexShipsPC.includes(81) && indexShipsPC.includes(82) && indexShipsPC.includes(83) && indexShipsPC.includes(84)) {
-        shooted9 = true;
-        setShip9Message("Ship 9 was sunked");
-      }
-
-      if (indexShipsPC.includes(97) && indexShipsPC.includes(98) && indexShipsPC.includes(99)) {
-        shooted10 = true;
-        setShip10Message("Ship 10 was sunked");
-      }
-
-      if (shooted6 === true && shooted7 === true && shooted8 === true && shooted9 === true && shooted10 === true) {
-        setText("GAME OVER! Human's wins")
-        alert("GAME OVER! Human's wins");
-        window.location.reload();
-      }
+    if (indexShips.includes(9) && indexShips.includes(19) && indexShips.includes(29) && indexShips.includes(39)) {
+      shooted2 = true;
+      setShip2Message("Ship 2 was sunked");
     }
 
-    const restart = (e) => {
-      e.preventDefault();
+    if (indexShips.includes(40) && indexShips.includes(50) && indexShips.includes(60) && indexShips.includes(70)) {
+      shooted3 = true;
+      setShip3Message("Ship 3 was sunked");
+    }
+
+    if (indexShips.includes(53) && indexShips.includes(54) && indexShips.includes(55)) {
+      shooted4 = true;
+      setShip4Message("Ship 4 was sunked");
+    }
+
+    if (indexShips.includes(93) && indexShips.includes(92) && indexShips.includes(91) && indexShips.includes(90)) {
+      shooted5 = true;
+      setShip5Message("Ship 5 was sunked");
+    }
+
+    if (shooted1 === true && shooted2 === true && shooted3 === true && shooted4 === true && shooted5 === true) {
+      setText2("GAME OVER! Human's wins")
+      alert("GAME OVER! PC's wins");
       window.location.reload();
-    };
-
-    return (
-      <div className="App">
-        <h1>The Battleship Game</h1>
-        <div className="reset-btn" onClick={(e) => restart(e)}>Reset Game</div>
-        {turn === "pc" ?
-          <>
-            <h3>It's PC's turn</h3>
-            <div className="container1">
-              <div className="tablero" id="tablero1">
-                {humanShips.map((celda, index) => {
-                  return (
-                    <div className={
-                      humanShips[index] === 0 ? "celda" : (humanShips[index] === 3 ? "celda torpedo close close:after" : (humanShips[index] === 2 ? "celda shooted close close:after" : "celda barco1"))}
-                      key={index}></div>
-                  )
-                })};
-              </div>
-              <div className="panel two">Announcements
-                <div className="messShipText">{text2}</div>
-                <div className="messShip">{ship1Message}</div>
-                <div className="messShip">{ship2Message}</div>
-                <div className="messShip">{ship3Message}</div>
-                <div className="messShip">{ship4Message}</div>
-                <div className="messShip">{ship5Message}</div>
-              </div>
-
-            </div>
-          </>
-          :
-          <>
-            <h3>It's Human's turn</h3>
-            <div className="container2">
-              <div className="tablero" id="tablero2">
-                {jugadasPC.map((celda, index) => {
-                  return (
-                    <div className={
-                      jugadasPC[index] === 0 ? "celda" : (jugadasPC[index] === 3 ? "celda torpedo2 close close:after" : (jugadasPC[index] === 2 ? "celda shooted2 close close:after" : "celda barco2"))}
-                      key={index} onClick={() => fireTorpedo2(index)}></div>
-                  )
-                })};
-              </div>
-              <div className="panel one">Announcements
-                <div className="messShipText">{text}</div>
-                <div className="messShip">{ship6Message}</div>
-                <div className="messShip">{ship7Message}</div>
-                <div className="messShip">{ship8Message}</div>
-                <div className="messShip">{ship9Message}</div>
-                <div className="messShip">{ship10Message}</div>
-              </div>
-            </div>
-          </>
-
-        }
-
-      </div>
-    );
+    }
   }
 
-  export default Game;
+  // Función para determinar cuando un barco del usuario "PC" está hundido y cuando ya no tiene barcos disponibles: "GAME OVER"
+  const shootedShipsPC = (indexShipsPC) => {
+    if (indexShipsPC.includes(0) && indexShipsPC.includes(10) && indexShipsPC.includes(20) && indexShipsPC.includes(30)) {
+      shooted6 = true;
+      setShip6Message("Ship 6 was sunked");
+    }
+
+    if (indexShipsPC.includes(16) && indexShipsPC.includes(17) && indexShipsPC.includes(18) && indexShipsPC.includes(19)) {
+      shooted7 = true;
+      setShip7Message("Ship 7 was sunked");
+    }
+
+    if (indexShipsPC.includes(24) && indexShipsPC.includes(34) && indexShipsPC.includes(44) && indexShipsPC.includes(54) && indexShipsPC.includes(64)) {
+      shooted8 = true;
+      setShip8Message("Ship 8 was sunked");
+    }
+
+    if (indexShipsPC.includes(81) && indexShipsPC.includes(82) && indexShipsPC.includes(83) && indexShipsPC.includes(84)) {
+      shooted9 = true;
+      setShip9Message("Ship 9 was sunked");
+    }
+
+    if (indexShipsPC.includes(97) && indexShipsPC.includes(98) && indexShipsPC.includes(99)) {
+      shooted10 = true;
+      setShip10Message("Ship 10 was sunked");
+    }
+
+    if (shooted6 === true && shooted7 === true && shooted8 === true && shooted9 === true && shooted10 === true) {
+      setText("GAME OVER! Human's wins")
+      alert("GAME OVER! Human's wins");
+      window.location.reload();
+    }
+  }
+
+  const restart = (e) => {
+    e.preventDefault();
+    window.location.reload();
+  };
+
+  return (
+    <div className="App">
+      <h1>The Battleship Game</h1>
+      <div className="reset-btn" onClick={(e) => restart(e)}>Reset Game</div>
+      {turn === "pc" ?
+        <>
+          <PCturn humanShips={humanShips} ship1Message={ship1Message} ship2Message={ship2Message} ship3Message={ship3Message} ship4Message={ship4Message} ship5Message={ship5Message} />
+        </>
+        :
+        <>
+          <HumanTurn jugadasPC={jugadasPC} fireTorpedo2={fireTorpedo2} text={text} ship6Message={ship6Message} ship7Message={ship7Message} ship8Message={ship8Message} ship9Message={ship9Message} ship10Message={ship10Message} />
+        </>
+
+      }
+
+    </div>
+  );
+}
+
+export default Game;
