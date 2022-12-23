@@ -1,0 +1,67 @@
+.start{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../img/battleship.png");
+    background-repeat: no-repeat;
+    background-size:cover;
+    filter:grayscale(0.5);
+    position: absolute;
+    z-index: -1;
+}
+ 
+
+#landing{
+    align-content: center;
+    width: 70vh;
+    height: 70vh;
+    background-color: whitesmoke;
+    text-align: center;
+    padding: 50px;
+    margin: auto;
+    border-radius: 15px; 
+    margin-top: 100px;  
+    z-index: 4;
+}
+
+h2{
+color: rgb(213, 104, 64);
+}
+
+button{
+    border: 5px solid coral;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    height: 80px;
+    margin: auto;
+    margin-bottom: 80px;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    margin-top: 25px;
+}
+button:hover{
+    background-color:  coral;
+    border-color: rgb(250, 231, 146);
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.block{
+    width: 40px;
+    height: 40px;
+    background-color: rgb(244, 234, 49);
+    margin: 5px;
+}
+.row{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.text{
+    margin-right: 10px;
+}
+
+
+
