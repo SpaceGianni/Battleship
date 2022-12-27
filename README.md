@@ -1,5 +1,5 @@
 ## About the project
-Battleship is a front-end type application for you to play the famous "battlwship" game. Detailed game instructions are delivered as the app loads.
+Battleship is a front-end type application for you to play the famous "battleship" game. Detailed game instructions are delivered as the app loads.
 
 ## Technologies and tools
 
