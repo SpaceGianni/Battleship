@@ -1,6 +1,6 @@
 import React from "react";
 
-const HumanTurn = ({jugadasPC,fireTorpedo2,text,ship6Message, ship7Message, ship8Message, ship9Message, ship10Messagegi}) => {
+const HumanTurn = ({jugadasPC,fireTorpedo2,text,ship6Message, ship7Message, ship8Message, ship9Message, ship10Message}) => {
     return(
         <>
         <h3>It's Human's turn</h3>
